@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 width="400" height="400" xmlns:ui="ui.*"
+	     implements="com.pblabs.screens.IScreen"
+		  xmlns:component="ui.component.*">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import com.pblabs.rendering2D.IScene2D;
+			import com.pblabs.screens.IScreen;
+			
+			import data.CardPosVo;
+			
+			import mx.collections.ArrayCollection;
+			import mx.core.DragSource;
+			import mx.core.IUIComponent;
+			import mx.events.DragEvent;
+			import mx.managers.DragManager;
+			
+			import ui.renderers.CardPosItemRenderer;
+			[Bindable]
+			public var cardPosGroup:ArrayCollection = GlobalDict.cardPosGrids;
+			
+			public function onShow():void
+			{
+				this.visible = true;
+			}
+			
+			public function onHide():void
+			{
+				this.visible = false;
+			}
+			
+			public function onFrame(delta:Number):void
+			{
+				
+			}
+			
+			public function onTick(delta:Number):void
+			{
+			
+			}
+
+			private function onDragEnter(e:DragEvent):void
+			{
+				var item:GridCardItem = e.dragInitiator as GridCardItem;
+				item.glowEffect.color = 0x3399ff;
+				item.glowEffect.alpha = 1;
+				item.width = 90;
+				item.height = 90;
+				if(e.dragSource.hasFormat("cardItem"))
+				{
+					DragManager.acceptDragDrop(e.currentTarget as IUIComponent);
+				}
+			}
+			
+			private function onDragExit(e:DragEvent):void
+			{
+				var item:GridCardItem = e.dragInitiator as GridCardItem;
+				item.glowEffect.alpha = 0;
+				item.width = 80;
+				item.height = 80;
+			}
+			
+			private function onDragDrop(e:DragEvent):void
+			{
+				var initItem:GridCardItem;
+				var dropAtItem:GridCardItem;
+				var tmpGridData:CardPosVo;
+				
+				initItem = e.dragInitiator as GridCardItem;
+				dropAtItem = e.target as GridCardItem;
+				if(initItem != dropAtItem)
+				{
+					initItem.glowEffect.alpha = 0;
+					tmpGridData = initItem.gridData;
+					initItem.gridData = dropAtItem.gridData;
+					dropAtItem.gridData = tmpGridData;
+				}
+			}
+			
+			private function onMouseDown(e:MouseEvent):void
+			{
+				var dragInitiator:GridCardItem = GridCardItem(e.currentTarget);
+				var ds:DragSource = new DragSource();
+				ds.addData(dragInitiator, "cardItem");               
+				
+				DragManager.doDrag(dragInitiator, ds, e);
+				trace("onMouseDown:",dragInitiator.id);
+			}
+			
+			private function onGridSet(e:MouseEvent):void
+			{
+				//TODO send grid conf to Server and persist
+			}
+
+		]]>
+	
+	</fx:Script>
+		
+	<s:Group>
+		
+		<component:GridCardItem id="g0" gridData="{cardPosGroup.getItemAt(0) as CardPosVo}"
+								dragEnter="onDragEnter(event)" dragExit="onDragExit(event)" dragDrop="onDragDrop(event)"
+								 mouseDown="onMouseDown(event)" 
+								>
+		</component:GridCardItem>
+		<component:GridCardItem id="g1" gridData="{cardPosGroup.getItemAt(1) as CardPosVo}"
+								dragEnter="onDragEnter(event)" dragExit="onDragExit(event)" dragDrop="onDragDrop(event)"
+								mouseDown="onMouseDown(event)" 
+								>
+		</component:GridCardItem>
+		<component:GridCardItem id="g2" gridData="{cardPosGroup.getItemAt(2) as CardPosVo}"
+								dragEnter="onDragEnter(event)" dragExit="onDragExit(event)" dragDrop="onDragDrop(event)"
+								mouseDown="onMouseDown(event)"
+								>
+		</component:GridCardItem>
+		<component:GridCardItem id="g3" gridData="{cardPosGroup.getItemAt(3) as CardPosVo}"
+								dragEnter="onDragEnter(event)" dragExit="onDragExit(event)" dragDrop="onDragDrop(event)"
+								mouseDown="onMouseDown(event)"
+								>
+		</component:GridCardItem>
+		<component:GridCardItem id="g4" gridData="{cardPosGroup.getItemAt(4) as CardPosVo}"
+								dragEnter="onDragEnter(event)" dragExit="onDragExit(event)" dragDrop="onDragDrop(event)"
+							    mouseDown="onMouseDown(event)"
+								>
+		</component:GridCardItem>
+		<component:GridCardItem id="g5" gridData="{cardPosGroup.getItemAt(5) as CardPosVo}"
+								dragEnter="onDragEnter(event)" dragExit="onDragExit(event)" dragDrop="onDragDrop(event)"
+								mouseDown="onMouseDown(event)"
+								>
+		</component:GridCardItem>
+		<component:GridCardItem id="g6" gridData="{cardPosGroup.getItemAt(6) as CardPosVo}"
+								dragEnter="onDragEnter(event)" dragExit="onDragExit(event)" dragDrop="onDragDrop(event)"
+							    mouseDown="onMouseDown(event)"
+								>
+		</component:GridCardItem>
+		<component:GridCardItem id="g7" gridData="{cardPosGroup.getItemAt(7) as CardPosVo}"
+								dragEnter="onDragEnter(event)" dragExit="onDragExit(event)" dragDrop="onDragDrop(event)"
+								mouseDown="onMouseDown(event)"
+								>
+		</component:GridCardItem>
+		<component:GridCardItem id="g8" gridData="{cardPosGroup.getItemAt(8) as CardPosVo}"
+								dragEnter="onDragEnter(event)" dragExit="onDragExit(event)" dragDrop="onDragDrop(event)"
+							    mouseDown="onMouseDown(event)"
+								>
+		</component:GridCardItem>
+		
+		
+		
+		<s:layout>
+			<s:TileLayout requestedRowCount="3" requestedColumnCount="3"/>
+		</s:layout>
+	</s:Group>
+	<s:Button id="ok" x="212" y="309" label="确认" click="onGridSet(event)">
+		
+	</s:Button>
+</s:Group>

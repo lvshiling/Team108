@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="1000" height="800" implements="com.pblabs.screens.IScreen"
+		 creationComplete="creationCompleteHandler(event)">
+	<fx:Script>
+		<![CDATA[
+			import com.tan12.shuihu.protocol.protobuf.Header.MessageType;
+			import com.tan12.shuihu.protocol.protobuf.Login;
+			import com.tan12.shuihu.protocol.protobuf.ProtobufConnection;
+			import com.tan12.shuihu.protocol.protobuf.Status;
+			import com.tan12.shuihu.protocol.protobuf.Status.Code;
+			import com.tan12.shuihu.protocol.protobuf.events.ProtobufMessageEvent;
+			
+			import mx.events.FlexEvent;
+			private var mdr:MainMenuMdr;
+			
+			private var connection:ProtobufConnection = new ProtobufConnection();
+			
+			protected function creationCompleteHandler(event:FlexEvent):void
+			{
+				mdr = new MainMenuMdr(this);
+			}
+			
+			public function onShow():void
+			{
+				this.visible = true;
+			}
+			
+			public function onHide():void
+			{
+				this.visible = false;
+			}
+			
+			public function onFrame(delta:Number):void
+			{
+			}
+			
+			public function onTick(delta:Number):void
+			{
+			
+			}
+			
+			protected function login_clickHandler(event:MouseEvent):void
+			{
+				connection.addEventListener(Event.CONNECT, connectHandler);
+				connection.addEventListener(Event.CLOSE, closeHandler);
+				connection.addEventListener(ProtobufMessageEvent.ON_MESSAGE, onMessageHandler);
+				connection.addEventListener(ProtobufMessageEvent.ILLEGAL_MESSAGE, illegalMessageHandler);
+				connection.addEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);
+				connection.addEventListener(SecurityErrorEvent.SECURITY_ERROR, securityErrorHandler);
+				
+				connection.connect(Constants.LOGIN_HOST, Constants.LOGIN_PORT);
+			}
+			
+			protected function onMessageHandler(event:ProtobufMessageEvent):void
+			{
+				trace("New message");
+				
+				switch (event.header.type) {
+					case MessageType.LOGIN_R:
+						trace("Login response");
+						if (event.header.status.code == Code.OK) {
+							trace("login successfully");
+						} else {
+							trace("login failed");
+						}
+						break;
+					default:
+						trace("Message type not supported");
+						break;
+				}
+			}
+			
+			protected function ioErrorHandler(event:IOErrorEvent):void
+			{
+				// TODO Auto-generated method stub
+				trace("IO Error");
+			}
+			
+			protected function securityErrorHandler(event:SecurityErrorEvent):void
+			{
+				// TODO Auto-generated method stub
+				trace("Security Error");
+			}
+			
+			protected function closeHandler(event:Event):void
+			{
+				// TODO Auto-generated method stub
+				trace("Close");
+			}
+			
+			protected function connectHandler(event:Event):void
+			{
+				trace("Connected");
+				
+				loginButton.enabled = false;
+								
+				var login:Login = new Login();
+				login.id = "000001";
+				login.key = "I1L;OI8ADF814KA,AFL.;";
+				
+				connection.SendMessageWithType(MessageType.LOGIN, login);
+			}
+			
+			protected function illegalMessageHandler(event:Event):void
+			{
+				// TODO Auto-generated method stub
+				trace("Illegal Message");
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:Group  width="571" height="56" horizontalCenter="0">
+		<s:Label x="171" y="9" width="260" height="36" fontSize="18" fontWeight="bold" text="系统提示: 与小竹一起互动吧！惠比寿~"/>
+	</s:Group>
+	<s:Group x="417" y="173" width="199" height="277">
+		<s:Button x="61" y="60" label="pve" id='pve'/>
+		<s:Button x="60" y="105" label="pvp" id='pvp'/>
+		<s:Label x="6" y="158" height="22" fontWeight="bold" text="Username:" verticalAlign="middle"/>
+		<s:Label x="6" y="192" width="63" height="22" fontWeight="bold" text="Password:"
+				 verticalAlign="middle"/>
+		<s:TextInput x="77" y="157" width="112" textAlign="left"/>
+		<s:TextInput x="76" y="191" width="113" textAlign="left"/>
+		<s:Button id="loginButton" x="99" y="222" width="90" label="Login" click="login_clickHandler(event)"/>
+	</s:Group>
+	<s:Button x="274" y="240" label="setGroupGrid" id="setGroupGrid"/>
+</s:Group>

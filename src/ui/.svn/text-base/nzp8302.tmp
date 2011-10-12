@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 width="400" height="400" xmlns:ui="ui.*"
+	     implements="com.pblabs.screens.IScreen"
+		 >
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import com.pblabs.rendering2D.IScene2D;
+			import com.pblabs.screens.IScreen;
+			
+			import data.CardPosVo;
+			
+			import mx.collections.ArrayCollection;
+			
+			import ui.renderers.CardPosItemRenderer;
+			[Bindable]
+			public var cardPosGroup:ArrayCollection = GlobalDict.cardPosGrids;
+			
+			public function onShow():void
+			{
+				this.visible = true;
+			}
+			
+			public function onHide():void
+			{
+				this.visible = false;
+			}
+			
+			public function onFrame(delta:Number):void
+			{
+				
+			}
+			
+			public function onTick(delta:Number):void
+			{
+			
+			}
+
+		]]>
+	</fx:Script>
+		
+	
+	<s:List dragEnabled="true" dropEnabled="true" dragMoveEnabled="true" width="100%" height="100%"
+			itemRenderer="ui.renderers.CardPosItemRenderer"
+		    dataProvider="{cardPosGroup}"
+			>
+		<s:layout>
+			<s:TileLayout requestedRowCount="3" requestedColumnCount="3"/>
+		</s:layout>
+	</s:List>
+		
+	
+</s:Group>

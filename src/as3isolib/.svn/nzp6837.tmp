@@ -1,0 +1,58 @@
+10
+
+dir
+65
+https://tan12-studio.eicp.net/svn/shuihu/shuihu/client/Team108/src/as3isolib
+https://tan12-studio.eicp.net/svn/shuihu
+
+
+
+2011-09-26T11:25:38.421391Z
+12
+lvshiling
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+92ebc3e3-7569-4b8e-96d9-b170b321138f
+
+graphics
+dir
+
+utils
+dir
+
+enum
+dir
+
+events
+dir
+
+display
+dir
+
+geom
+dir
+
+core
+dir
+
+data
+dir
+
+bounds
+dir
+
+errors
+dir
+

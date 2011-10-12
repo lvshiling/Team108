@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="1024" height="768"
+		 implements="com.pblabs.screens.IScreen"
+		 creationComplete="creationCompleteHandler(event)"
+		 >
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			import as3isolib.geom.Pt;
+			import as3isolib.graphics.Stroke;
+			import com.pblabs.engine.entity.IEntity;
+			import com.pblabs.engine.entity.allocateEntity;
+			import com.pblabs.rendering2D.BasicSpatialManager2D;
+			import com.qizhon.controls.MouseManager;
+			import com.qizhon.controls.MousePanningSceneComponent;
+			import com.qizhon.iso.components.MyIsoGridComponent;
+			import com.qizhon.iso.components.MyIsoSpatialComponent;
+			import com.qizhon.iso.components.MyIsoSpriteComponent;
+			import com.qizhon.iso.renderers.IsoSimpleSceneLayoutRenderer;
+			import com.qizhon.iso.scene.IsoDisplayObjectScene;
+			import com.qizhon.iso.scene.MyIsoSceneView;
+			import mx.events.FlexEvent;
+			
+			private var mdr:BattleSceneMdr;
+					
+			public function onShow():void
+			{
+				this.visible = true;
+				if(mdr)
+					mdr.initialize();
+			}
+			
+			public function onHide():void
+			{
+				this.visible = false;
+				if(mdr)
+					mdr.cleanUp();
+			}
+			
+			public function onFrame(delta:Number):void
+			{
+			}
+			
+			public function onTick(delta:Number):void
+			{	
+			}
+			
+			protected function creationCompleteHandler(event:FlexEvent):void
+			{
+				mdr = new BattleSceneMdr(this);
+			}
+			
+		]]>
+	</fx:Script>
+
+	<s:Button id="swfBtn" x="129" y="126" label="Add Symbol"/>
+	<s:Button id="spriteSheetBtn" x="237" y="126" label="Add Sprite Sheet"/>
+	<s:Button id="drapBtn" x="377" y="127" label="Test mouse Component"/>
+	<s:Button id="goMainMenu" x="289" y="297" label="go MainMenu"/>
+</s:Group>

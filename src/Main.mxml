@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   xmlns:main="*" width="1000" height="800"
+			   minWidth="1000" minHeight="800" applicationComplete="creationCompleteHandler(event)">
+	<fx:Script>
+		<![CDATA[
+			import as3isolib.geom.Pt;
+			import as3isolib.graphics.Stroke;
+			
+			import com.pblabs.engine.PBE;
+			import com.pblabs.engine.entity.IEntity;
+			import com.pblabs.engine.entity.allocateEntity;
+			import com.pblabs.rendering2D.BasicSpatialManager2D;
+			import com.pblabs.rendering2D.SceneAlignment;
+			import com.qizhon.controls.InteractionComponent;
+			import com.qizhon.iso.renderers.IIsoCustomRenderer;
+			import com.qizhon.iso.renderers.IsoDefaultViewRenderer;
+			import com.qizhon.iso.renderers.IsoSceneLayoutRenderer;
+			
+			import mx.core.FlexGlobals;
+			import mx.core.UIComponent;
+			import mx.events.FlexEvent;
+
+			private var mdr:MainMdr;
+			protected function creationCompleteHandler(event:FlexEvent):void
+			{
+				mdr = new MainMdr(this);
+			}
+			
+			
+		]]>	
+	</fx:Script>
+</s:Application>
